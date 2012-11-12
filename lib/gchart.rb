@@ -44,7 +44,7 @@ class Gchart
 
   attr_accessor :bg_type, :bg_color, :bg_angle, :chart_type, :chart_color, :chart_angle, :axis_range, :thickness, :new_markers, :grid_lines, :use_ssl
 
-  attr_accessor :min_value, :max_value
+  attr_accessor :min_value, :max_value,:legend_font_size
 
   types.each do |type|
     instance_eval <<-DYNCLASSMETH
@@ -84,6 +84,7 @@ class Gchart
     @height = 200
     @curved = false
     @horizontal = false
+    @lengend_font_size = 12
 
     @grouped = false
     @overlapped = false
@@ -446,6 +447,10 @@ class Gchart
     when /(left|l)$/
       "chdlp=l"
     end
+  end 
+
+  def set_legend_font_size
+    "chdls=000000,#{@legend_font_size.to_i}"
   end
 
   def set_line_thickness
@@ -679,7 +684,9 @@ class Gchart
       when '@title'
         set_title unless title.nil?
       when '@legend'
-        set_legend unless legend.nil?
+        set_legend unless legend.nil? 
+      when '@legend_font_size'
+        set_legend_font_size unless legend_font_size.nil?
       when '@labels'
         set_labels unless labels.nil?
       when '@legend_position'
